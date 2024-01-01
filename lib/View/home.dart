@@ -1,5 +1,6 @@
 import "package:crypto/Model/coinModel.dart";
 import "package:crypto/View/Components/item.dart";
+import "package:crypto/View/Components/item2.dart";
 import "package:flutter/material.dart";
 import "package:http/http.dart" as http;
 
@@ -113,6 +114,14 @@ class _HomeState extends State<Home> {
               height: myHeight * 0.7,
               width: myWidth,
               decoration: BoxDecoration(
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.shade300,
+                    spreadRadius: 3,
+                    blurRadius: 5,
+                    offset: Offset(0, 3),
+                  ),
+                ],
                 color: Colors.white,
                 borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(50),
@@ -136,18 +145,59 @@ class _HomeState extends State<Home> {
                       ],
                     ),
                   ),
+                  SizedBox(
+                    height: myHeight * 0.02,
+                  ),
+                  isRefreshing
+                      ? Center(
+                          child: CircularProgressIndicator(),
+                        )
+                      : ListView.builder(
+                          shrinkWrap: true,
+                          physics: NeverScrollableScrollPhysics(),
+                          itemCount: 4,
+                          // itemCount: coinMarket!.length,
+                          itemBuilder: (context, index) {
+                            return Item(
+                              item: coinMarket![index],
+                            );
+                          }),
+                  // SizedBox(
+                  //   height: myHeight * 0.02,
+                  // ),
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: myWidth * 0.05),
+                    child: Row(
+                      children: [
+                        Text(
+                          'Recommend to Buy',
+                          style: TextStyle(
+                              fontSize: 22, fontWeight: FontWeight.bold),
+                        ),
+                      ],
+                    ),
+                  ),
+                  // SizedBox(
+                  //   height: myHeight * 0.01,
+                  // ),
                   Expanded(
-                      child: isRefreshing
-                          ? Center(
-                              child: CircularProgressIndicator(),
-                            )
-                          : ListView.builder(
-                              itemCount: coinMarket!.length,
-                              itemBuilder: (context, index) {
-                                return Item(
-                                  item: coinMarket![index],
-                                );
-                              }))
+                    child: Padding(
+                      padding: EdgeInsets.only(
+                        left: myWidth * 0.03,
+                      ),
+                      child: ListView.builder(
+                          scrollDirection: Axis.horizontal,
+                          itemCount: coinMarket!.length,
+                          itemBuilder: (context, index) {
+                            return Item2(
+                              item: coinMarket![index],
+                            );
+                          }),
+                    ),
+                  ),
+                  SizedBox(
+                    height: myHeight * 0.01,
+                  )
                 ],
               ),
             )
