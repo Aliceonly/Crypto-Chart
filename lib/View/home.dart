@@ -190,7 +190,7 @@ class _HomeState extends State<Home> {
                           itemCount: coinMarket!.length,
                           itemBuilder: (context, index) {
                             return Item2(
-                              item: coinMarket![index],
+                              item: coinMarket![index + 4],
                             );
                           }),
                     ),

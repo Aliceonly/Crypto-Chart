@@ -21,7 +21,7 @@ class Item extends StatelessWidget {
               child: Container(
                   height: myHeight * 0.05, child: Image.network(item.image)),
             ),
-            SizedBox(width: myWidth * 0.03),
+            SizedBox(width: myWidth * 0.02),
             Expanded(
               flex: 2,
               child: Column(
@@ -29,12 +29,12 @@ class Item extends StatelessWidget {
                 children: [
                   Text(
                     item.name,
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                   ),
                   Text(
                     "0 " + item.symbol,
                     style: TextStyle(
-                        fontSize: 18,
+                        fontSize: 14,
                         fontWeight: FontWeight.normal,
                         color: Colors.grey),
                   ),
@@ -80,16 +80,16 @@ class Item extends StatelessWidget {
                         item.priceChange24H.toString().contains('-')
                             ? "-\$" +
                                 item.priceChange24H
-                                    .toStringAsFixed(2)
+                                    .toInt()
                                     .toString()
                                     .replaceAll('-', '')
-                            : "\$" + item.priceChange24H.toStringAsFixed(2),
+                            : "\$" + item.priceChange24H.toInt().toString(),
                         style: TextStyle(
                             fontSize: 12,
                             fontWeight: FontWeight.normal,
                             color: Colors.grey),
                       ),
-                      SizedBox(width: myWidth * 0.02),
+                      SizedBox(width: myWidth * 0.01),
                       Text(
                         item.marketCapChangePercentage24H > 0
                             ? '+' +
