@@ -181,32 +181,37 @@ class _SelectCoinState extends State<SelectCoin> {
                             color: Color(0xffFBC700),
                           ),
                         )
-                      : SfCartesianChart(
-                          trackballBehavior: trackballBehavior,
-                          zoomPanBehavior: ZoomPanBehavior(
-                            zoomMode: ZoomMode.x,
-                            enablePanning: true,
-                          ),
-                          series: <ChartSeries>[
-                            CandleSeries<ChartModal, int>(
-                                enableSolidCandles: true,
-                                enableTooltip: true,
-                                bullColor: Colors.green,
-                                bearColor: Colors.red,
-                                dataSource: itemChart!,
-                                xValueMapper: (ChartModal sales, _) =>
-                                    sales.time,
-                                lowValueMapper: (ChartModal sales, _) =>
-                                    sales.low,
-                                highValueMapper: (ChartModal sales, _) =>
-                                    sales.high,
-                                openValueMapper: (ChartModal sales, _) =>
-                                    sales.open,
-                                closeValueMapper: (ChartModal sales, _) =>
-                                    sales.close,
-                                animationDuration: 55)
-                          ],
-                        ),
+                      : itemChart == null || itemChart!.length == 0
+                          ? const Center(
+                              child: CircularProgressIndicator(
+                              color: Color(0xffFBC700),
+                            ))
+                          : SfCartesianChart(
+                              trackballBehavior: trackballBehavior,
+                              zoomPanBehavior: ZoomPanBehavior(
+                                zoomMode: ZoomMode.x,
+                                enablePinching: true,
+                              ),
+                              series: <ChartSeries>[
+                                CandleSeries<ChartModal, int>(
+                                    enableSolidCandles: true,
+                                    enableTooltip: true,
+                                    bullColor: Colors.green,
+                                    bearColor: Colors.red,
+                                    dataSource: itemChart!,
+                                    xValueMapper: (ChartModal sales, _) =>
+                                        sales.time,
+                                    lowValueMapper: (ChartModal sales, _) =>
+                                        sales.low,
+                                    highValueMapper: (ChartModal sales, _) =>
+                                        sales.high,
+                                    openValueMapper: (ChartModal sales, _) =>
+                                        sales.open,
+                                    closeValueMapper: (ChartModal sales, _) =>
+                                        sales.close,
+                                    animationDuration: 55)
+                              ],
+                            ),
                 ),
                 SizedBox(height: myHeight * 0.01),
                 Center(

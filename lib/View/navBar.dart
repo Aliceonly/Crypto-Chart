@@ -1,3 +1,4 @@
+import "package:crypto/View/anotherPage.dart";
 import "package:crypto/View/home.dart";
 import "package:flutter/material.dart";
 
@@ -11,7 +12,12 @@ class NavBar extends StatefulWidget {
 class _NavBarState extends State<NavBar> {
   int _currentIndex = 0;
 
-  List<Widget> pages = [const Home(), const Home(), const Home(), const Home()];
+  List<Widget> pages = [
+    const Home(),
+    const AnotherPage(),
+    const AnotherPage(),
+    const AnotherPage()
+  ];
 
   @override
   Widget build(BuildContext context) {

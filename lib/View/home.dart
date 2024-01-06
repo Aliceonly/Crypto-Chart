@@ -36,8 +36,8 @@ class _HomeState extends State<Home> {
               Color.fromARGB(255, 253, 225, 112),
               Color(0xffFBC700)
             ])),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        child: ListView(
+          // mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Padding(
               padding: EdgeInsets.symmetric(vertical: myHeight * 0.03),
@@ -151,21 +151,26 @@ class _HomeState extends State<Home> {
                   Container(
                     height: myHeight * 0.37,
                     child: isRefreshing
-                      ? const Center(
-                          child: CircularProgressIndicator(
-                            color: Color(0xffFBC700),
-                          ),
-                        )
-                      : ListView.builder(
-                          shrinkWrap: true,
-                          physics: const NeverScrollableScrollPhysics(),
-                          itemCount: 4,
-                          // itemCount: coinMarket!.length,
-                          itemBuilder: (context, index) {
-                            return Item(
-                              item: coinMarket![index],
-                            );
-                          }),
+                        ? const Center(
+                            child: CircularProgressIndicator(
+                              color: Color(0xffFBC700),
+                            ),
+                          )
+                        : coinMarket == null || coinMarket!.length == 0
+                            ? const Center(
+                                child: CircularProgressIndicator(
+                                color: Color(0xffFBC700),
+                              ))
+                            : ListView.builder(
+                                shrinkWrap: true,
+                                physics: const NeverScrollableScrollPhysics(),
+                                itemCount: 4,
+                                // itemCount: coinMarket!.length,
+                                itemBuilder: (context, index) {
+                                  return Item(
+                                    item: coinMarket![index],
+                                  );
+                                }),
                   ),
                   // SizedBox(
                   //   height: myHeight * 0.02,
@@ -196,14 +201,19 @@ class _HomeState extends State<Home> {
                                 color: Color(0xffFBC700),
                               ),
                             )
-                          : ListView.builder(
-                              scrollDirection: Axis.horizontal,
-                              itemCount: coinMarket!.length,
-                              itemBuilder: (context, index) {
-                                return Item2(
-                                  item: coinMarket![index + 4],
-                                );
-                              }),
+                          : coinMarket == null || coinMarket!.length == 0
+                              ? const Center(
+                                  child: CircularProgressIndicator(
+                                  color: Color(0xffFBC700),
+                                ))
+                              : ListView.builder(
+                                  scrollDirection: Axis.horizontal,
+                                  itemCount: coinMarket!.length,
+                                  itemBuilder: (context, index) {
+                                    return Item2(
+                                      item: coinMarket![index + 4],
+                                    );
+                                  }),
                     ),
                   ),
                   SizedBox(
