@@ -103,152 +103,193 @@ class _SelectCoinState extends State<SelectCoin> {
               ),
             ),
             Divider(),
-            Padding(
-              padding: EdgeInsets.symmetric(
-                  horizontal: myWidth * 0.05, vertical: myHeight * 0.02),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Column(
+            Expanded(
+                child: ListView(
+              children: [
+                Padding(
+                  padding: EdgeInsets.symmetric(
+                      horizontal: myWidth * 0.05, vertical: myHeight * 0.02),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(
-                        "Low",
-                        style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.grey),
+                      Column(
+                        children: [
+                          Text(
+                            "Low",
+                            style: TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.grey),
+                          ),
+                          SizedBox(height: myHeight * 0.01),
+                          Text(
+                            '\$ ' + widget.selectItem.low24H.toString(),
+                            style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.normal,
+                                color: Colors.black),
+                          ),
+                        ],
                       ),
-                      SizedBox(height: myHeight * 0.01),
-                      Text(
-                        '\$ ' + widget.selectItem.low24H.toString(),
-                        style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.normal,
-                            color: Colors.black),
+                      Column(
+                        children: [
+                          Text(
+                            "High",
+                            style: TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.grey),
+                          ),
+                          SizedBox(height: myHeight * 0.01),
+                          Text(
+                            '\$ ' + widget.selectItem.high24H.toString(),
+                            style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.normal,
+                                color: Colors.black),
+                          ),
+                        ],
                       ),
+                      Column(
+                        children: [
+                          Text(
+                            "Vol",
+                            style: TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.grey),
+                          ),
+                          SizedBox(height: myHeight * 0.01),
+                          Text(
+                            '\$ ' +
+                                widget.selectItem.totalVolume.toString() +
+                                'M',
+                            style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.normal,
+                                color: Colors.black),
+                          ),
+                        ],
+                      )
                     ],
                   ),
-                  Column(
-                    children: [
-                      Text(
-                        "High",
-                        style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.grey),
-                      ),
-                      SizedBox(height: myHeight * 0.01),
-                      Text(
-                        '\$ ' + widget.selectItem.high24H.toString(),
-                        style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.normal,
-                            color: Colors.black),
-                      ),
-                    ],
-                  ),
-                  Column(
-                    children: [
-                      Text(
-                        "Vol",
-                        style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.grey),
-                      ),
-                      SizedBox(height: myHeight * 0.01),
-                      Text(
-                        '\$ ' + widget.selectItem.totalVolume.toString() + 'M',
-                        style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.normal,
-                            color: Colors.black),
-                      ),
-                    ],
-                  )
-                ],
-              ),
-            ),
-            SizedBox(height: myHeight * 0.015),
+                ),
+                SizedBox(height: myHeight * 0.015),
+                Container(
+                  height: myHeight * 0.4,
+                  width: myWidth,
+                  // color: Colors.amber,
+                  child: isRefresh == true
+                      ? Center(
+                          child: CircularProgressIndicator(
+                            color: Color(0xffFBC700),
+                          ),
+                        )
+                      : SfCartesianChart(
+                          trackballBehavior: trackballBehavior,
+                          zoomPanBehavior: ZoomPanBehavior(
+                            zoomMode: ZoomMode.x,
+                            enablePanning: true,
+                          ),
+                          series: <ChartSeries>[
+                            CandleSeries<ChartModal, int>(
+                                enableSolidCandles: true,
+                                enableTooltip: true,
+                                bullColor: Colors.green,
+                                bearColor: Colors.red,
+                                dataSource: itemChart!,
+                                xValueMapper: (ChartModal sales, _) =>
+                                    sales.time,
+                                lowValueMapper: (ChartModal sales, _) =>
+                                    sales.low,
+                                highValueMapper: (ChartModal sales, _) =>
+                                    sales.high,
+                                openValueMapper: (ChartModal sales, _) =>
+                                    sales.open,
+                                closeValueMapper: (ChartModal sales, _) =>
+                                    sales.close,
+                                animationDuration: 55)
+                          ],
+                        ),
+                ),
+                SizedBox(height: myHeight * 0.01),
+                Container(
+                  height: myHeight * 0.04,
+                  child: ListView.builder(
+                      shrinkWrap: true,
+                      itemBuilder: (context, index) {
+                        return Padding(
+                          padding:
+                              EdgeInsets.symmetric(horizontal: myWidth * 0.02),
+                          child: GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                textBool = [
+                                  false,
+                                  false,
+                                  false,
+                                  false,
+                                  false,
+                                  false
+                                ];
+                                textBool[index] = true;
+                                setDays(text[index]);
+                                getChart();
+                              });
+                            },
+                            child: Container(
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: myWidth * 0.03,
+                                  vertical: myHeight * 0.005),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(5),
+                                color: textBool[index] == true
+                                    ? Color(0xffFBC700).withOpacity(0.3)
+                                    : Colors.transparent,
+                              ),
+                              child: Text(
+                                text[index],
+                                style: TextStyle(fontSize: 18),
+                              ),
+                            ),
+                          ),
+                        );
+                      },
+                      itemCount: text.length,
+                      scrollDirection: Axis.horizontal),
+                )
+              ],
+            )),
             Container(
-              height: myHeight * 0.4,
+              height: myHeight * 0.1,
               width: myWidth,
               // color: Colors.amber,
-              child: isRefresh == true
-                  ? Center(
-                      child: CircularProgressIndicator(
-                        color: Color(0xffFBC700),
+              child: Column(children: [
+                Divider(
+                  thickness: 2,
+                ),
+                Row(
+                  children: [
+                    Container(
+                      padding: EdgeInsets.symmetric(
+                          horizontal: myWidth * 0.05,
+                          vertical: myHeight * 0.01),
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20),
+                          color: Color(0xffFBC700)),
+                      child: Row(
+                        children: [
+                          Icon(Icons.add),
+                          Text(
+                            'Add to profolio',
+                            style: TextStyle(fontSize: 20),
+                          ),
+                        ],
                       ),
                     )
-                  : SfCartesianChart(
-                      trackballBehavior: trackballBehavior,
-                      zoomPanBehavior: ZoomPanBehavior(
-                        zoomMode: ZoomMode.x,
-                        enablePanning: true,
-                      ),
-                      series: <ChartSeries>[
-                        CandleSeries<ChartModal, int>(
-                            enableSolidCandles: true,
-                            enableTooltip: true,
-                            bullColor: Colors.green,
-                            bearColor: Colors.red,
-                            dataSource: itemChart!,
-                            xValueMapper: (ChartModal sales, _) => sales.time,
-                            lowValueMapper: (ChartModal sales, _) => sales.low,
-                            highValueMapper: (ChartModal sales, _) =>
-                                sales.high,
-                            openValueMapper: (ChartModal sales, _) =>
-                                sales.open,
-                            closeValueMapper: (ChartModal sales, _) =>
-                                sales.close,
-                            animationDuration: 55)
-                      ],
-                    ),
-            ),
-            SizedBox(height: myHeight * 0.01),
-            Container(
-              height: myHeight * 0.04,
-              child: ListView.builder(
-                  shrinkWrap: true,
-                  itemBuilder: (context, index) {
-                    return Padding(
-                      padding: EdgeInsets.symmetric(horizontal: myWidth * 0.02),
-                      child: GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            textBool = [
-                              false,
-                              false,
-                              false,
-                              false,
-                              false,
-                              false
-                            ];
-                            textBool[index] = true;
-                            setDays(text[index]);
-                            getChart();
-                          });
-                        },
-                        child: Container(
-                          padding: EdgeInsets.symmetric(
-                              horizontal: myWidth * 0.03,
-                              vertical: myHeight * 0.005),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(5),
-                            color: textBool[index] == true
-                                ? Color(0xffFBC700).withOpacity(0.3)
-                                : Colors.transparent,
-                          ),
-                          child: Text(
-                            text[index],
-                            style: TextStyle(fontSize: 18),
-                          ),
-                        ),
-                      ),
-                    );
-                  },
-                  itemCount: text.length,
-                  scrollDirection: Axis.horizontal),
+                  ],
+                )
+              ]),
             )
           ],
         ),
