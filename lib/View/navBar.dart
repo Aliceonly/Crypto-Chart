@@ -11,7 +11,7 @@ class NavBar extends StatefulWidget {
 class _NavBarState extends State<NavBar> {
   int _currentIndex = 0;
 
-  List<Widget> pages = [Home(), Home(), Home(), Home()];
+  List<Widget> pages = [const Home(), const Home(), const Home(), const Home()];
 
   @override
   Widget build(BuildContext context) {
@@ -44,7 +44,7 @@ class _NavBarState extends State<NavBar> {
                   activeIcon: Image.asset(
                     "assets/icons/1.2.png",
                     height: myHeight * 0.03,
-                    color: Color(0xffFBC700),
+                    color: const Color(0xffFBC700),
                   )),
               BottomNavigationBarItem(
                   icon: Image.asset(
@@ -56,7 +56,7 @@ class _NavBarState extends State<NavBar> {
                   activeIcon: Image.asset(
                     "assets/icons/2.2.png",
                     height: myHeight * 0.03,
-                    color: Color(0xffFBC700),
+                    color: const Color(0xffFBC700),
                   )),
               BottomNavigationBarItem(
                   icon: Image.asset(
@@ -68,7 +68,7 @@ class _NavBarState extends State<NavBar> {
                   activeIcon: Image.asset(
                     "assets/icons/3.2.png",
                     height: myHeight * 0.03,
-                    color: Color(0xffFBC700),
+                    color: const Color(0xffFBC700),
                   )),
               BottomNavigationBarItem(
                   icon: Image.asset(
@@ -80,7 +80,7 @@ class _NavBarState extends State<NavBar> {
                   activeIcon: Image.asset(
                     "assets/icons/4.2.png",
                     height: myHeight * 0.03,
-                    color: Color(0xffFBC700),
+                    color: const Color(0xffFBC700),
                   ))
             ],
           )),

@@ -17,13 +17,13 @@ class _SplashState extends State<Splash> {
     return SafeArea(
         child: Scaffold(
       backgroundColor: Colors.white,
-      body: Container(
+      body: SizedBox(
         height: myHeight,
         width: myWidth,
         child:
             Column(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
           Image.asset('assets/image/1.gif'),
-          Column(
+          const Column(
             children: [
               Text(
                 "The Future",
@@ -50,16 +50,16 @@ class _SplashState extends State<Splash> {
             child: GestureDetector(
               onTap: () {
                 Navigator.push(
-                    context, MaterialPageRoute(builder: (context) => NavBar()));
+                    context, MaterialPageRoute(builder: (context) => const NavBar()));
               },
               child: Container(
                 decoration: BoxDecoration(
-                    color: Color(0xffFBC700),
+                    color: const Color(0xffFBC700),
                     borderRadius: BorderRadius.circular(50)),
                 child: Padding(
                   padding: EdgeInsets.symmetric(
                       horizontal: myWidth * 0.05, vertical: myHeight * 0.013),
-                  child: Row(
+                  child: const Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(

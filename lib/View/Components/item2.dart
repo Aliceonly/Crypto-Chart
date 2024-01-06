@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 class Item2 extends StatelessWidget {
   var item;
-  Item2({this.item});
+  Item2({super.key, this.item});
 
   @override
   Widget build(BuildContext context) {
@@ -33,16 +33,16 @@ class Item2 extends StatelessWidget {
               border: Border.all(color: Colors.grey)),
           child:
               Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            Container(
+            SizedBox(
                 height: myHeight * 0.035, child: Image.network(item.image)),
             SizedBox(height: myHeight * 0.01),
             Text(item.id,
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
             Row(
               children: [
                 Text(
-                  '\$ ' + item.currentPrice.toString(),
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  '\$ ${item.currentPrice}',
+                  style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                 ),
               ],
             ),
@@ -50,13 +50,12 @@ class Item2 extends StatelessWidget {
               children: [
                 Text(
                   item.priceChange24H.toString().contains('-')
-                      ? "-\$" +
-                          item.priceChange24H
+                      ? "-\$${item.priceChange24H
                               .toStringAsFixed(2)
                               .toString()
-                              .replaceAll('-', '')
+                              .replaceAll('-', '')}"
                       : "\$" + item.priceChange24H.toStringAsFixed(2),
-                  style: TextStyle(
+                  style: const TextStyle(
                       fontSize: 12,
                       fontWeight: FontWeight.normal,
                       color: Colors.grey),
@@ -64,9 +63,8 @@ class Item2 extends StatelessWidget {
                 SizedBox(width: myWidth * 0.02),
                 Text(
                   item.marketCapChangePercentage24H > 0
-                      ? '+' +
-                          item.marketCapChangePercentage24H.toStringAsFixed(2) +
-                          '%'
+                      ? '${'+' +
+                          item.marketCapChangePercentage24H.toStringAsFixed(2)}%'
                       : item.marketCapChangePercentage24H.toStringAsFixed(2) +
                           '%',
                   style: TextStyle(

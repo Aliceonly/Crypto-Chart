@@ -28,7 +28,7 @@ class _HomeState extends State<Home> {
       body: Container(
         height: myHeight,
         width: myWidth,
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
             gradient: LinearGradient(
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
@@ -50,20 +50,20 @@ class _HomeState extends State<Home> {
                     decoration: BoxDecoration(
                         color: Colors.white.withOpacity(0.5),
                         borderRadius: BorderRadius.circular(5)),
-                    child: Text(
+                    child: const Text(
                       'Main portfolio',
                       style: TextStyle(
                         fontSize: 18,
                       ),
                     ),
                   ),
-                  Text(
+                  const Text(
                     'Top 10 coins',
                     style: TextStyle(
                       fontSize: 18,
                     ),
                   ),
-                  Text(
+                  const Text(
                     'Exprimental',
                     style: TextStyle(
                       fontSize: 18,
@@ -77,7 +77,7 @@ class _HomeState extends State<Home> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(
+                  const Text(
                     '\$ 7,466.20',
                     style: TextStyle(fontSize: 35),
                   ),
@@ -98,7 +98,7 @@ class _HomeState extends State<Home> {
             ),
             Padding(
               padding: EdgeInsets.symmetric(horizontal: myWidth * 0.07),
-              child: Row(
+              child: const Row(
                 children: [
                   Text(
                     '+162% all time',
@@ -119,11 +119,11 @@ class _HomeState extends State<Home> {
                     color: Colors.grey.shade300,
                     spreadRadius: 3,
                     blurRadius: 5,
-                    offset: Offset(0, 3),
+                    offset: const Offset(0, 3),
                   ),
                 ],
                 color: Colors.white,
-                borderRadius: BorderRadius.only(
+                borderRadius: const BorderRadius.only(
                     topLeft: Radius.circular(50),
                     topRight: Radius.circular(50)),
               ),
@@ -134,7 +134,7 @@ class _HomeState extends State<Home> {
                   ),
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: myWidth * 0.08),
-                    child: Row(
+                    child: const Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
@@ -148,13 +148,17 @@ class _HomeState extends State<Home> {
                   SizedBox(
                     height: myHeight * 0.02,
                   ),
-                  isRefreshing
-                      ? Center(
-                          child: CircularProgressIndicator(),
+                  Container(
+                    height: myHeight * 0.37,
+                    child: isRefreshing
+                      ? const Center(
+                          child: CircularProgressIndicator(
+                            color: Color(0xffFBC700),
+                          ),
                         )
                       : ListView.builder(
                           shrinkWrap: true,
-                          physics: NeverScrollableScrollPhysics(),
+                          physics: const NeverScrollableScrollPhysics(),
                           itemCount: 4,
                           // itemCount: coinMarket!.length,
                           itemBuilder: (context, index) {
@@ -162,12 +166,13 @@ class _HomeState extends State<Home> {
                               item: coinMarket![index],
                             );
                           }),
+                  ),
                   // SizedBox(
                   //   height: myHeight * 0.02,
                   // ),
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: myWidth * 0.05),
-                    child: Row(
+                    child: const Row(
                       children: [
                         Text(
                           'Recommend to Buy',
@@ -185,14 +190,20 @@ class _HomeState extends State<Home> {
                       padding: EdgeInsets.only(
                         left: myWidth * 0.03,
                       ),
-                      child: ListView.builder(
-                          scrollDirection: Axis.horizontal,
-                          itemCount: coinMarket!.length,
-                          itemBuilder: (context, index) {
-                            return Item2(
-                              item: coinMarket![index + 4],
-                            );
-                          }),
+                      child: isRefreshing
+                          ? const Center(
+                              child: CircularProgressIndicator(
+                                color: Color(0xffFBC700),
+                              ),
+                            )
+                          : ListView.builder(
+                              scrollDirection: Axis.horizontal,
+                              itemCount: coinMarket!.length,
+                              itemBuilder: (context, index) {
+                                return Item2(
+                                  item: coinMarket![index + 4],
+                                );
+                              }),
                     ),
                   ),
                   SizedBox(
@@ -237,5 +248,6 @@ class _HomeState extends State<Home> {
     } else {
       print(response.statusCode);
     }
+    return null;
   }
 }

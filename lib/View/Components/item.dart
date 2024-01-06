@@ -3,7 +3,7 @@ import "package:flutter/material.dart";
 
 class Item extends StatelessWidget {
   var item;
-  Item({this.item});
+  Item({super.key, this.item});
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +18,7 @@ class Item extends StatelessWidget {
           children: [
             Expanded(
               flex: 1,
-              child: Container(
+              child: SizedBox(
                   height: myHeight * 0.05, child: Image.network(item.image)),
             ),
             SizedBox(width: myWidth * 0.02),
@@ -29,11 +29,11 @@ class Item extends StatelessWidget {
                 children: [
                   Text(
                     item.name,
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                    style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                   ),
                   Text(
                     "0 " + item.symbol,
-                    style: TextStyle(
+                    style: const TextStyle(
                         fontSize: 14,
                         fontWeight: FontWeight.normal,
                         color: Colors.grey),
@@ -44,7 +44,7 @@ class Item extends StatelessWidget {
             SizedBox(width: myWidth * 0.01),
             Expanded(
               flex: 2,
-              child: Container(
+              child: SizedBox(
                 height: myHeight * 0.05,
                 // width: myWidth * 0.2,
                 child: Sparkline(
@@ -71,20 +71,19 @@ class Item extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    '\$ ' + item.currentPrice.toString(),
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                    '\$ ${item.currentPrice}',
+                    style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                   ),
                   Row(
                     children: [
                       Text(
                         item.priceChange24H.toString().contains('-')
-                            ? "-\$" +
-                                item.priceChange24H
+                            ? "-\$${item.priceChange24H
                                     .toInt()
                                     .toString()
-                                    .replaceAll('-', '')
-                            : "\$" + item.priceChange24H.toInt().toString(),
-                        style: TextStyle(
+                                    .replaceAll('-', '')}"
+                            : "\$${item.priceChange24H.toInt()}",
+                        style: const TextStyle(
                             fontSize: 12,
                             fontWeight: FontWeight.normal,
                             color: Colors.grey),
@@ -92,10 +91,9 @@ class Item extends StatelessWidget {
                       SizedBox(width: myWidth * 0.01),
                       Text(
                         item.marketCapChangePercentage24H > 0
-                            ? '+' +
+                            ? '${'+' +
                                 item.marketCapChangePercentage24H
-                                    .toStringAsFixed(2) +
-                                '%'
+                                    .toStringAsFixed(2)}%'
                             : item.marketCapChangePercentage24H
                                     .toStringAsFixed(2) +
                                 '%',
